@@ -11,29 +11,32 @@ const clientGoogle = new google.auth.JWT(
   ]
 );
 
-clientGoogle.authorize((err, tokens) => {
+clientGoogle.authorize((err) => {
   if (err) return console.log(err);
   console.log('connection successful');
-  gsrun(clientGoogle);
+  gsrun(clientGoogle, '1BXbjFypGLNftVGMcHsMnf5TVvaUksS7Y2oZBir7DPVo', google.sheets({version:'v4', auth: client}));
 });
 
-const gsrun = async (client) => {
-  const gsapi = google.sheets({version:'v4', auth: client});
-  const options = {
-    spreadsheetId: '1BXbjFypGLNftVGMcHsMnf5TVvaUksS7Y2oZBir7DPVo',
-    range: 'Sheet1!A1:B4'
+const gsrun = async (client, gsapi, ssid) => {
+  console.log(gsread(client, gsapi, ssid, 'Sheet1!A1:A2'));
+  // const updateOptions = {
+  //   spreadsheetId: ssid,
+  //   range: 'Sheet1!E1',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: { values: newDataArray }
+  // };
+  // let response = await gsapi.spreadsheets.values.update(updateOptions);
+};
+
+const gsread = async (client, gsapi, ssid, range) => {
+  const parameters = {
+    spreadsheetId: ssid,
+    range: range,
   };
-  let data = await gsapi.spreadsheets.values.get(options);
-  let dataArray = data.data.values;
-  let newDataArray = dataArray.map((row) => {
+  let options = await gsapi.speadsheets.values.get(parameters);
+  let data = options.data.values;
+  let dataArray = data.map((row) => {
     row.push(row[0] + '-' + row[1]);
-    return row
+    return row;
   });
-  const updateOptions = {
-    spreadsheetId: '1BXbjFypGLNftVGMcHsMnf5TVvaUksS7Y2oZBir7DPVo',
-    range: 'Sheet1!E1',
-    valueInputOption: 'USER_ENTERED',
-    resource: { values: newDataArray }
-  };
-  let response = await gsapi.spreadsheets.values.update(updateOptions);
 };
