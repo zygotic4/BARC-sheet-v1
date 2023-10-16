@@ -1,4 +1,7 @@
 require("dotenv").config();
+const gsGet = require("./utils/gsGet");
+const gsClear = require("./utils/gsClear");
+const gsUpdate = require("./utils/gsUpdate");
 
 const { google } = require('googleapis');
 
@@ -18,30 +21,40 @@ clientGoogle.authorize((err) => {
 });
 
 const gsrun = async (client, gsapi, ssid) => {
-  gsread(client, gsapi, ssid, 'Sheet1!A1:A2');
-  // const updateOptions = {
-  //   spreadsheetId: ssid,
-  //   range: 'Sheet1!E1',
-  //   valueInputOption: 'USER_ENTERED',
-  //   resource: { values: newDataArray }
-  // };
-  // let response = await gsapi.spreadsheets.values.update(updateOptions);
+  try {
+    console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
+    // await gsClear(gsapi, ssid, 'Sheet1!B1');
+    // await gsUpdate(gsapi, ssid, 'Sheet1!B1', 'hamb');
+  } catch (error) {
+    console.log('gsrun: ' + error);
+  };
 };
 
-const gsread = async (client, gsapi, ssid, range) => {
+const gsfind = async (gsapi, ssid, query) => {
   const parameters = {
     spreadsheetId: ssid,
-    range: range,
+    upper: 100,
   };
-  let options = await gsapi.spreadsheets.values.get(parameters);
-  let data = options.data.values;
-  let dataArray = data.map((row) => {
-    row.push(row[0] + '-' + row[1]);
-    return row;
-  });
-  console.log(dataArray)
-};
+  spread.getRequestHeaders().then((authorization) => {
+    const query = `select * where K='${searchId}'`; // K can be changed to the col the data is on
+    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}&tq=${encodeURI(query)}`;
+    let options = {
+      url: url,
+      method: "GET",
+      headers: authorization,
+    };
+    request(options, err, res, result) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (result === ("")) {
+      return message.channel.send(`\`${QUERY}\` Did not match to any records.`); //ID didnt match
+      } else {
+      message.channel.send(`\`${QUERY}\` has been matched with; ${result}`) //confirms ID has matched
+      csvParse(result, {}, (err, ar) => console.log(ar)) // console logs results
+````  }
+    }
+  })
 
-const gsfind = async (client, gsapi, ssid, query) => {
-  
 }
