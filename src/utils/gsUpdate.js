@@ -7,6 +7,5 @@ module.exports = async (gsapi, ssid, range, input) => {
       values: [[input]],
     }
   };
-  let response = await gsapi.spreadsheets.values.update(parameters);
-  return response
+  return response = await gsapi.spreadsheets.values.update(parameters);
 };
