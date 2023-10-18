@@ -1,5 +1,6 @@
 require("dotenv").config();
 const util = require('util');
+const eventHandler = require("./handlers/eventHandler");
 const gsGet = require("./sheets/gsGet");
 const gsClear = require("./sheets/gsClear");
 const gsUpdate = require("./sheets/gsUpdate");
