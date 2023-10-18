@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-module.exports = async (gsapi, ssid, target) => {
-  let query = `select * where ${target}`;
+module.exports = async (gsapi, ssid, clause, target) => {
+  let query = `select * where ${clause} ${target}`;
   try {
     let response = await axios.get(`https://docs.google.com/spreadsheets/d/${ssid}/gviz/tq?tq=${encodeURI(query)}`);
     data = response.data;

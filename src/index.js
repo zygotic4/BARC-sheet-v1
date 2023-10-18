@@ -26,16 +26,25 @@ clientGoogle.authorize((err) => {
 const gsrun = async (client, gsapi, ssid) => {
   try {
     // console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
-    // await gsQuery(gsapi, ssid, 'A = "spongal"');
+    // await gsQuery(gsapi, ssid, 'A = ', "'spongal'");
     // await gsClear(gsapi, ssid, 'Sheet1!B1');
     // await gsUpdate(gsapi, ssid, 'Sheet1!B1', 'hamb');
-    addEp(client, gsapi, ssid, 'spongal', 1);
+    // addPoints(client, gsapi, ssid, 'spongal', 1, 'B', 'C');
   } catch (error) {
     console.log('gsrun: ' + error);
   };
 };
 
-const addEp = async (client, gsapi, ssid, user, points) => {
+const addPoints = async (client, gsapi, ssid, user, points, col1, col2) => {
   let index = await gsFind(client, gsapi, ssid, user, 'A');
-  
+
+  let p = await gsGet(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index);
+
+  let week = parseInt(p[0][0]);
+  let total = parseInt(p[0][1]);
+
+  week += points;
+  total += points;
+
+  return await gsUpdate(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index, [week, total]);
 };
