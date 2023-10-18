@@ -5,21 +5,43 @@ const gsClear = require("./sheets/gsClear");
 const gsUpdate = require("./sheets/gsUpdate");
 const gsQuery = require("./sheets/gsQuery");
 const gsFind = require("./sheets/gsFind");
+const changePoints = require("./manage/changePoints");
 
+const { Client, IntentsBitField, Partials } = require("discord.js");
 const { google } = require('googleapis');
 
+const clientDiscord = new Client({
+  intents: [
+    IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.GuildMembers,
+    IntentsBitField.Flags.GuildMessages,
+    IntentsBitField.Flags.GuildPresences,
+    IntentsBitField.Flags.GuildVoiceStates,
+    IntentsBitField.Flags.MessageContent,
+    IntentsBitField.Flags.DirectMessageReactions,
+    IntentsBitField.Flags.DirectMessages,
+    IntentsBitField.Flags.DirectMessageTyping,
+  ],
+  partials: [
+    Partials.Channel,
+    Partials.Message
+  ],
+});
+
 const clientGoogle = new google.auth.JWT(
-  process.env.client_email,
+  process.env.GOOGLE_CLIENT_EMAIL,
   null,
-  process.env.private_key.split(String.raw`\n`).join('\n'),
+  process.env.GOOGLE_PRIVATE_KEY.split(String.raw`\n`).join('\n'),
   [
     'https://www.googleapis.com/auth/spreadsheets'
   ]
 );
 
+clientDiscord.login(process.env.DISCORD_TOKEN);
+
 clientGoogle.authorize((err) => {
   if (err) return console.log(err);
-  console.log('connection successful');
+  console.log('connected to sheet');
   gsrun(clientGoogle, google.sheets({version:'v4', auth: clientGoogle}), '1BXbjFypGLNftVGMcHsMnf5TVvaUksS7Y2oZBir7DPVo');
 });
 
@@ -29,22 +51,10 @@ const gsrun = async (client, gsapi, ssid) => {
     // await gsQuery(gsapi, ssid, 'A = ', "'spongal'");
     // await gsClear(gsapi, ssid, 'Sheet1!B1');
     // await gsUpdate(gsapi, ssid, 'Sheet1!B1', 'hamb');
-    // addPoints(client, gsapi, ssid, 'spongal', 1, 'B', 'C');
+    // changePoints(client, gsapi, ssid, 'spongal', 1, 'B', 'C');
   } catch (error) {
     console.log('gsrun: ' + error);
   };
 };
 
-const addPoints = async (client, gsapi, ssid, user, points, col1, col2) => {
-  let index = await gsFind(client, gsapi, ssid, user, 'A');
-
-  let p = await gsGet(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index);
-
-  let week = parseInt(p[0][0]);
-  let total = parseInt(p[0][1]);
-
-  week += points;
-  total += points;
-
-  return await gsUpdate(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index, [week, total]);
-};
+eventHandler(clientDiscord);
