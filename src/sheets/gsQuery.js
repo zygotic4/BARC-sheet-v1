@@ -11,6 +11,6 @@ module.exports = async (gsapi, ssid, clause, target) => {
     if (response.table.rows == '') return console.log('no records found');
     return response;
   } catch (error) {
-    console.error('gsquery ' + error);
+    console.log('gsquery ' + error);
   };
 };

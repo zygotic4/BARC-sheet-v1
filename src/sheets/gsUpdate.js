@@ -5,7 +5,11 @@ module.exports = async (gsapi, ssid, range, input) => {
     valueInputOption: "USER_ENTERED",
     resource: {
       values: [input],
-    }
+    },
   };
-  return response = await gsapi.spreadsheets.values.update(parameters);
+  try {
+    return response = await gsapi.spreadsheets.values.update(parameters);
+  } catch (error) {
+    console.log('gsupdate ' + error)
+  };
 };

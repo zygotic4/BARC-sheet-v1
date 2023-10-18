@@ -13,5 +13,12 @@ module.exports = async (client, gsapi, ssid, user, points, col1, col2) => {
   week += points;
   total += points;
 
+  if (total < 0) {
+    total = 0;
+  };
+  if (week < 0) {
+    week = 0;
+  };
+
   return await gsUpdate(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index, [week, total]);
 };
