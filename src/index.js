@@ -1,8 +1,10 @@
 require("dotenv").config();
-const gsGet = require("./utils/gsGet");
-const gsClear = require("./utils/gsClear");
-const gsUpdate = require("./utils/gsUpdate");
-const gsFind = require("./utils/gsFind");
+const util = require('util');
+const gsGet = require("./sheets/gsGet");
+const gsClear = require("./sheets/gsClear");
+const gsUpdate = require("./sheets/gsUpdate");
+const gsQuery = require("./sheets/gsQuery");
+const gsFind = require("./sheets/gsFind");
 
 const { google } = require('googleapis');
 
@@ -23,11 +25,17 @@ clientGoogle.authorize((err) => {
 
 const gsrun = async (client, gsapi, ssid) => {
   try {
-    console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
-    await gsFind(gsapi, ssid, 'specific')
+    // console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
+    // await gsQuery(gsapi, ssid, 'A = "spongal"');
     // await gsClear(gsapi, ssid, 'Sheet1!B1');
     // await gsUpdate(gsapi, ssid, 'Sheet1!B1', 'hamb');
+    addEp(client, gsapi, ssid, 'spongal', 1);
   } catch (error) {
     console.log('gsrun: ' + error);
   };
+};
+
+const addEp = async (client, gsapi, ssid, user, points) => {
+  let index = await gsFind(client, gsapi, ssid, user, 'A');
+  
 };
