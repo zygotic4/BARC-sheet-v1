@@ -20,5 +20,5 @@ module.exports = async (client, gsapi, ssid, user, points, col1, col2) => {
     week = 0;
   };
 
-  return await gsUpdate(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index, [week, total]);
+  return await gsUpdate(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index, [[week, total]]);
 };

@@ -4,7 +4,7 @@ module.exports = async (gsapi, ssid, range, input) => {
     range: range,
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [input],
+      values: input,
     },
   };
   try {

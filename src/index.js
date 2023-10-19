@@ -7,6 +7,7 @@ const gsUpdate = require("./sheets/gsUpdate");
 const gsQuery = require("./sheets/gsQuery");
 const gsFind = require("./sheets/gsFind");
 const changePoints = require("./manage/changePoints");
+const newRecord = require("./manage/newRecord");
 
 const { Client, IntentsBitField, Partials } = require("discord.js");
 const { google } = require('googleapis');
@@ -38,7 +39,7 @@ const clientGoogle = new google.auth.JWT(
   ]
 );
 
-clientDiscord.login(process.env.DISCORD_TOKEN);
+//clientDiscord.login(process.env.DISCORD_TOKEN);
 
 clientGoogle.authorize((err) => {
   if (err) return console.log(err);
@@ -48,6 +49,7 @@ clientGoogle.authorize((err) => {
 
 const gsrun = async (client, gsapi, ssid) => {
   try {
+    // newRecord(client, gsapi, ssid, 'johnson', 51, 52)
     // console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
     // await gsQuery(gsapi, ssid, 'A = ', "'spongal'");
     // await gsClear(gsapi, ssid, 'Sheet1!B1');

@@ -7,6 +7,6 @@ module.exports = async (gsapi, ssid, range) => {
     let dataobj = await gsapi.spreadsheets.values.get(parameters);
     return dataobj.data.values;
   } catch (error) {
-    console.log(error)
+    console.log('gsget ' + error);
   };
 };

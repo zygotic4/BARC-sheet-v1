@@ -3,5 +3,9 @@ module.exports = async (gsapi, ssid, range) => {
     spreadsheetId: ssid,
     range: range,
   };
-  return await gsapi.spreadsheets.values.clear(parameters);
+  try {
+    return await gsapi.spreadsheets.values.clear(parameters);    
+  } catch (error) {
+    console.log('gsclear ' + error);
+  };
 };
