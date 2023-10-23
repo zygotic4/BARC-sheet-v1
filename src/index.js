@@ -8,6 +8,7 @@ const gsQuery = require("./sheets/gsQuery");
 const gsFind = require("./sheets/gsFind");
 const changePoints = require("./manage/changePoints");
 const newRecord = require("./manage/newRecord");
+const deleteRecord = require("./manage/deleteRecord");
 
 const { Client, IntentsBitField, Partials } = require("discord.js");
 const { google } = require('googleapis');
@@ -49,6 +50,7 @@ clientGoogle.authorize((err) => {
 
 const gsrun = async (client, gsapi, ssid) => {
   try {
+    // deleteRecord(client, gsapi, ssid, 'boobman');
     // newRecord(client, gsapi, ssid, 'johnson', 51, 52)
     // console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
     // await gsQuery(gsapi, ssid, 'A = ', "'spongal'");

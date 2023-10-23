@@ -3,7 +3,7 @@ const gsGet = require("../sheets/gsGet");
 const gsUpdate = require("../sheets/gsUpdate");
 
 module.exports = async (client, gsapi, ssid, user, points, col1, col2) => {
-  let index = await gsFind(client, gsapi, ssid, user, 'A');
+  let index = await gsFind(gsapi, ssid, user, 'A');
 
   let p = await gsGet(gsapi, ssid, 'Sheet1!' + col1 + index + ':' + col2 + index);
 
