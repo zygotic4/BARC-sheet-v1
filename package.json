@@ -14,7 +14,7 @@
     "axios": "^1.5.1",
     "csv": "^6.3.5",
     "csv-parse": "^5.5.2",
-    "discord.js": "^14.12.1",
+    "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "google-charts": "^2.0.0",
     "googleapis": "^105.0.0"
