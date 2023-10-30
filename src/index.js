@@ -1,17 +1,13 @@
 require("dotenv").config();
-const util = require('util');
 const eventHandler = require("./handlers/eventHandler");
-const gsGet = require("./sheets/gsGet");
-const gsClear = require("./sheets/gsClear");
-const gsUpdate = require("./sheets/gsUpdate");
-const gsQuery = require("./sheets/gsQuery");
-const gsFind = require("./sheets/gsFind");
-const changePoints = require("./manage/changePoints");
-const newRecord = require("./manage/newRecord");
-const deleteRecord = require("./manage/deleteRecord");
-
 const { Client, IntentsBitField, Partials } = require("discord.js");
+
+const gsSearch = require("./sheets/gsSearch")
+const gsQuery = require("./sheets/gsQuery")
+const changePoints = require("./manage/changePoints")
+
 const { google } = require('googleapis');
+const util = require('util')//, {showHidden: false, depth: null, colors: true}
 
 const clientDiscord = new Client({
   intents: [
@@ -40,7 +36,7 @@ const clientGoogle = new google.auth.JWT(
   ]
 );
 
-//clientDiscord.login(process.env.DISCORD_TOKEN);
+clientDiscord.login(process.env.DISCORD_TOKEN);
 
 clientGoogle.authorize((err) => {
   if (err) return console.log(err);
@@ -50,10 +46,11 @@ clientGoogle.authorize((err) => {
 
 const gsrun = async (client, gsapi, ssid) => {
   try {
+    //console.log(util.inspect(await gsSearch(gsapi, ssid, 'spongal', 'A'), {showHidden: false, depth: null, colors: true}))
     // deleteRecord(client, gsapi, ssid, 'boobman');
     // newRecord(client, gsapi, ssid, 'johnson', 51, 52)
     // console.log(await gsGet(gsapi, ssid, 'Sheet1!A1:A2'));
-    // await gsQuery(gsapi, ssid, 'A = ', "'spongal'");
+    // console.log(util.inspect(await gsQuery(gsapi, ssid, 'B = ', 1), {showHidden: false, depth: null, colors: true}));
     // await gsClear(gsapi, ssid, 'Sheet1!B1');
     // await gsUpdate(gsapi, ssid, 'Sheet1!B1', 'hamb');
     // changePoints(client, gsapi, ssid, 'spongal', 1, 'B', 'C');
@@ -62,4 +59,4 @@ const gsrun = async (client, gsapi, ssid) => {
   };
 };
 
-eventHandler(clientDiscord);
+eventHandler(clientDiscord, google.sheets({version:'v4', auth: clientGoogle}), '1BXbjFypGLNftVGMcHsMnf5TVvaUksS7Y2oZBir7DPVo');

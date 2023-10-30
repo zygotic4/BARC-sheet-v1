@@ -2,7 +2,7 @@ const { devs, testServer } = require("../../../config.json");
 const getLocalCommands = require("../../utils/getLocalCommands");
 const { EmbedBuilder } = require("discord.js");
 
-module.exports = async (client, message) => {
+module.exports = async (client, message, gsapi, ssid) => {
   if (!message.content.startsWith("-")) return;
 
   const localCommands = getLocalCommands();
@@ -54,7 +54,7 @@ module.exports = async (client, message) => {
         }
       }
     }
-    await commandObject.callback(client, message);
+    await commandObject.callback(client, message, gsapi, ssid);
   } catch (error) {
     console.log(`handleCommands.js ${error}`);
   }
