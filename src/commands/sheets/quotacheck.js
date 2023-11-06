@@ -4,7 +4,7 @@ module.exports = {
   name: 'quotacheck',
   description: 'Display quota completion of a company (CM+)',
   aliases: ['qc'],
-  callback: async (client, message) => {
+  callback: async (client, message, gsapi, ssid) => {
     const embed = new EmbedBuilder();
 
   }
