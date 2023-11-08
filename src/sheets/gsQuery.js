@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 module.exports = async (gsapi, ssid, clause, target) => {
+  target = target.toLowerCase()
   let query = `select * where ${clause} '${target}'`;
   try {
     let response = await axios.get(`https://docs.google.com/spreadsheets/d/${ssid}/gviz/tq?tq=${encodeURIComponent(query)}`);
@@ -8,7 +9,7 @@ module.exports = async (gsapi, ssid, clause, target) => {
     data = data.substring(data.indexOf("(") + 1);
     data = data.substring(0, data.length - 2);
     response = JSON.parse(data);
-    if (response.table == '') return false
+    if (response.table == '' || response.table.rows[0] == '') return false
     return response;
   } catch (error) {
     console.log('gsquery ' + error.response);

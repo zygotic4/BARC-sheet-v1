@@ -8,5 +8,6 @@ module.exports = async (gsapi, ssid, range) => {
     return dataobj.data.values;
   } catch (error) {
     console.log('gsget ' + error);
+    return false
   };
 };
