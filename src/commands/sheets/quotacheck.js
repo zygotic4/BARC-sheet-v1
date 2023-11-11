@@ -6,6 +6,6 @@ module.exports = {
   aliases: ['qc'],
   callback: async (client, message, gsapi, ssid) => {
     const embed = new EmbedBuilder();
-
+    const company = message.content.split(" ").slice(1)
   }
 }
