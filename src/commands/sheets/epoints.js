@@ -34,15 +34,15 @@ module.exports = {
     }
     switch (n) {
       case 1:
-        user = await gsQuery(gsapi, ssid, 'B =', message.author.id);
+        user = await gsQuery(gsapi, ssid, 'B =', "'" + message.author.id + "'");
         try {
           embed
             .setColor('NotQuiteBlack')
             .setTitle(`${user.table.rows[0].c[0].v}'s Event Points`)
             .addFields(
               { name: 'Player', value: user.table.rows[0].c[0].v, inline: true},
-              { name: 'Weekly EP', value: user.table.rows[0].c[4].v, inline: true},
-              { name: 'Total EP', value: user.table.rows[0].c[5].v, inline: true},
+              { name: 'Weekly EP', value: user.table.rows[0].c[4].v.toString(), inline: true},
+              { name: 'Total EP', value: user.table.rows[0].c[5].v.toString(), inline: true},
               { name: 'Current Rank', value: user.table.rows[0].c[3].v},
             )
             .setTimestamp()
@@ -58,7 +58,7 @@ module.exports = {
         }
         break
       case 2:
-        user = await gsQuery(gsapi, ssid, 'A =', args[1]);
+        user = await gsQuery(gsapi, ssid, 'A =', "'" + args[1] + "'");
         if (!user) {
           embed 
             .setColor('Red')
@@ -73,8 +73,8 @@ module.exports = {
             .setTitle(`${user.table.rows[0].c[0].v}'s Event Points`)
             .addFields(
               { name: 'Player', value: user.table.rows[0].c[0].v, inline: true},
-              { name: 'Weekly EP', value: user.table.rows[0].c[4].v, inline: true},
-              { name: 'Total EP', value: user.table.rows[0].c[5].v, inline: true},
+              { name: 'Weekly EP', value: user.table.rows[0].c[4].v.toString(), inline: true},
+              { name: 'Total EP', value: user.table.rows[0].c[5].v.toString(), inline: true},
               { name: 'Current Rank', value: user.table.rows[0].c[3].v},
             )
             .setTimestamp()
@@ -98,7 +98,7 @@ module.exports = {
             .setFooter({text: `${module.exports.name} | BARC Bot`});
           message.channel.send({embeds: [embed] });
       case 5:
-        user = await gsQuery(gsapi, ssid, 'A =', message.content);
+        user = await gsQuery(gsapi, ssid, 'A =', "'" + message.content + "'");
         if (!user) {
           embed 
             .setColor('Red')

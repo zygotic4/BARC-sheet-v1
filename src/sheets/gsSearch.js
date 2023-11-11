@@ -3,7 +3,7 @@ const gsGet = require("./gsGet");
 
 module.exports = async (gsapi, ssid, target, col) => {
   try {
-    const response = await gsQuery(gsapi, ssid, col + " !=", "");
+    const response = await gsQuery(gsapi, ssid, col + " !=", "''");
     if (!response) return false
     let upper = response.table.rows.length + 2;
     for (i = 3; i < upper; i++) {

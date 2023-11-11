@@ -13,12 +13,12 @@ module.exports = {
     let user
     switch (args.length) {
       case 1:
-        user = await gsQuery(gsapi, ssid, 'B =', message.author.id);
+        user = await gsQuery(gsapi, ssid, 'B =', "'" + message.author.id + "'");
         if (!user) return message.channel.send('user not found');
         console.log(util.inspect(user.table.rows[0].c[0].v, {showHidden: false, depth: null, colors: true}))
         break
       case 2:
-        user = await gsQuery(gsapi, ssid, 'A =', args[1]);
+        user = await gsQuery(gsapi, ssid, 'A =', "'" + args[1] + "'");
         if (!user) return message.channel.send('user not found');
         console.log(util.inspect(user.table.rows[0].c[0].v, {showHidden: false, depth: null, colors: true}))
         break
