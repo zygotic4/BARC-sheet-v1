@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 module.exports = async (gsapi, ssid, clause, target, opt = false) => {
-  target = target.toLowerCase()
+  if (!opt) target = target.toLowerCase()
   let query
   opt == true ? query = clause : query = `select * where ${clause} ${target}`;
   try {
@@ -13,6 +13,6 @@ module.exports = async (gsapi, ssid, clause, target, opt = false) => {
     if (response.table == '' || response.table.rows[0] == '') return false
     return response;
   } catch (error) {
-    console.log('gsquery ' + error.response);
+    console.log('gsquery ' + error);
   };
 };

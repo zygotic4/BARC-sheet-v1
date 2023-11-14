@@ -12,7 +12,7 @@ module.exports = {
       .setColor('NotQuiteBlack')
       .setTitle('Help')
       .setDescription(
-        localCommands.map((cmd) => `**${cmd.name}** \n${cmd.description}\n`).join('')
+        localCommands.map((cmd) => `**${cmd.name}** \n\`${cmd.description}\n\``).join('')
       )
       .setFooter({text: `${module.exports.name} | BARC Bot`});
     return message.reply({embeds: [embed]});

@@ -4,10 +4,15 @@
   "devs": ["312995875024797697"],
   "hicom": ["312995875024797697"],
   "officer": ["312995875024797697"],
-  "elite": ["312995875024797697"],
-  "quota_dusk": ["6", "3"],
-  "quota_sd": ["5", "3"],
-  "quota_storm": ["5", "3"],
-  "quota_trooper": ["4", "3"],
-  "quota_arc": ["2"]
+  "quota_dusk": [6, 3],
+  "quota_sd": [5, 3],
+  "quota_storm": [5, 3],
+  "quota_trooper": [4, 3],
+  "quota_arc": [2],
+  "staff_dusk": [],
+  "staff_sd": [],
+  "staff_storm": [],
+  "staff_trooper": [],
+  "staff_ls": [],
+  "staff_ts": []
 }

@@ -9,7 +9,7 @@ module.exports = async (client, gsapi, ssid, user, points, col1, col2) => {
   if (!p) return false
   let week = parseInt(p[0][0]);
   let total = parseInt(p[0][1]);
-  points = parseInt(points)
+  points = parseInt(points);
   week += points;
   total += points;
   if (total < 0) {
