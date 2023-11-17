@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports = (configFile, key, action, element) => { // updateJSON('config.json', 'quota_dusk', 'add', 7);
+module.exports = (configFile, element, action, key) => { // updateJSON('config.json', user.id, 'add', 'quota_dusk');
   let config; 
   try {
     const data = fs.readFileSync(configFile, 'utf8');

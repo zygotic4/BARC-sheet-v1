@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
-const { updateJSON } = require("../../utils/updateJSON");
-const { hicom } = require('../../../config.json');
+const fs = require('fs');
+const updateJSON = require("../../utils/updateJSON");
+const { devs, hicom, officer, staff_dusk, staff_sd, staff_storm } = require('../../../config.json');
 
 module.exports = {
   name: 'perms',
@@ -44,25 +45,51 @@ module.exports = {
         message.channel.send({embeds: [embed] });
         break
       case 4:
-        const nicknameToFind = args[1]
-        // Fetch all members of the guild
-        await message.guild.members.fetch();
-        // Find the user by nickname
-        const targetMember = message.guild.members.cache.find(member => member.nickname == nicknameToFind);
-        // Check if the member was found
-        if (!targetMember) {
+        const rawElement = args[1].substring(2, args[1].length - 1)
+        console.log(rawElement)
+        try {
+          await message.guild.members.fetch(rawElement);
+        } catch (error) {
+          if (error.code === 50035) {
+            embed 
+              .setColor('Red')
+              .setTitle('Error')
+              .setDescription(`Could not find a member or role for "${args[1]}"! Make sure that you tag members.`)
+              .setFooter({text: `${module.exports.name} | BARC Bot`});
+            return message.channel.send({embeds: [embed] });
+          } else {
+            console.error(error);
+            return false;
+          }
+        }
+        const element = rawElement
+        const action = args[2].toLowerCase()
+        if (action !== 'add' && action !== 'remove') {
           embed 
             .setColor('Red')
             .setTitle('Error')
-            .setDescription('Player could not be found!')
+            .setDescription('Please specify a valid action!')
             .setFooter({text: `${module.exports.name} | BARC Bot`});
           return message.channel.send({embeds: [embed] });
         }
-        let element = targetMember
-        let action = args[2]
-        let key = args[3]
+        const key = args[3].toLowerCase()
+        try {
+          const jsonData = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+          // Check if the objectName is a key in the JSON object
+          if (!Object.keys(jsonData).includes(key)) {
+            embed 
+              .setColor('Red')
+              .setTitle('Error')
+              .setDescription('Please specify a valid permission!')
+              .setFooter({text: `${module.exports.name} | BARC Bot`});
+            return message.channel.send({embeds: [embed] });
+          }
+        } catch (error) {
+          return console.error('Error reading or parsing JSON file: ', error);
+        }
+        updateJSON('config.json', element, action, key)
         break  
     }
-    //updateJSON('config.json', key, action, element)
+    return;
   }
 }
