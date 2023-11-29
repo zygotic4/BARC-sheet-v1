@@ -2,7 +2,7 @@ const gsQuery = require('../../sheets/gsQuery');
 const { EmbedBuilder } = require("discord.js");
 const util = require('util');
 
-module.exports = {
+module.exports = { //THIS WILL BE THE ADD COMMAND
   name: 'company',
   description: 'Display company of a user',
   aliases: [],

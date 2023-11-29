@@ -11,7 +11,7 @@ module.exports = {
     const embed = new EmbedBuilder();
     const args = message.content.slice(1).trim().split(' ').map(word => word.toLowerCase().trim());
     let n = Math.min(args.length, 5);
-    if (n >= 2 && args[2] !== 'change' ) return sendErrorEmbed(embed, 'Error', 'Invalid command!', message);
+    if (n >= 3 && args[2] !== 'change' ) return sendErrorEmbed(embed, 'Error', 'Invalid command!', message);
     if (n >= 3 && !officer.includes(message.author.id)) return sendErrorEmbed(embed, 'Permissions Error', 'You do not have permission to use this command!', message);
     switch (n) {
       case 1:

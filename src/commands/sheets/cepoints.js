@@ -11,7 +11,7 @@ module.exports = {
     const embed = new EmbedBuilder();
     const args = message.content.slice(1).trim().split(' ').map(word => word.toLowerCase().trim());
     let n = Math.min(args.length, 5);
-    if (n >= 2 && args[2] !== 'change' ) return sendErrorEmbed(embed, 'Error', 'Invalid command!', message);
+    if (n >= 3 && args[2] !== 'change' ) return sendErrorEmbed(embed, 'Error', 'Invalid command!', message);
     if (n >= 3 && !staff_company.includes(message.author.id)) return sendErrorEmbed(embed, 'Permissions Error', 'You do not have permission to use this command!', message);
     switch (n) {
       case 1:
@@ -65,8 +65,8 @@ const sendUserEmbed = async (embed, user, message) => {
     .setTitle(`${user.c[0].v}'s Event Points`)
     .addFields(
       { name: 'Player', value: user.c[0].v, inline: true },
-      { name: 'Weekly CEP', value: user.c[4].v.toString(), inline: true },
-      { name: 'Total CEP', value: user.c[5].v.toString(), inline: true },
+      { name: 'Weekly CEP', value: user.c[6].v.toString(), inline: true },
+      { name: 'Total CEP', value: user.c[7].v.toString(), inline: true },
       { name: 'Current Rank', value: user.c[3].v },
     )
     .setTimestamp();
